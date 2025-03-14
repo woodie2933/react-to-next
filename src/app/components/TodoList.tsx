@@ -1,13 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-
 import TodoItem from "./TodoItem";
 
-export default function TodoList() {
+export type Todo = {
+  id: number;
+  title: string;
+  contents: string;
+  isCompleted: boolean;
+  imgPath: string;
+  createdAt: number;
+};
+
+const TodoList = () => {
   const {
     data: todos,
     isPending,
     error,
-  } = useQuery({
+  } = useQuery<Todo[]>({
     queryKey: ["todos"],
     queryFn: async () => {
       const response = await fetch(`http://localhost:4000/todos`);
@@ -43,4 +51,6 @@ export default function TodoList() {
       </ul>
     </>
   );
-}
+};
+
+export default TodoList;

@@ -1,29 +1,19 @@
 import React from "react";
-
-interface BlogItem {
-  id: string;
-  title: string;
-  content: string;
-  author: string;
-  category: string;
-  createdAt: number;
-  tags: string[];
-}
-
-async function fetchBlogs(): Promise<BlogItem[]> {
+//ssr
+const BlogPage = async () => {
+  type Blog = {
+    id: string;
+    title: string;
+    content: string;
+    author: string;
+    category: string;
+    createdAt: number;
+    tags: [string, string, string];
+  };
   const response = await fetch("http://localhost:4000/blogs", {
     cache: "no-store",
   });
-
-  if (!response.ok) {
-    throw new Error("블로그 데이터를 가져오는 데 실패했습니다.");
-  }
-
-  return response.json();
-}
-
-export default async function BlogPage() {
-  const blogs: BlogItem[] = await fetchBlogs();
+  const blogs: Blog[] = await response.json();
 
   return (
     <div className="blog-container">
@@ -34,7 +24,7 @@ export default async function BlogPage() {
           렌더링하는 방식입니다.
         </p>
         <p>
-          실시간 업데이트가 중요하고 검색엔진 노출(SEO)이 중요한 경우 적절한
+          실시간 업데이트가 중요하고 검색엔진노출(SEO)이 중요한 경우 적절한
           렌더링 방식입니다.
         </p>
       </div>
@@ -61,7 +51,7 @@ export default async function BlogPage() {
                 <i className="fas fa-user"></i> {blog.author}
               </span>
               <span className="blog-date">
-                <i className="fas fa-calendar"></i>{" "}
+                <i className="fas fa-calendar"></i>
                 {new Date(blog.createdAt).toLocaleDateString()}
               </span>
             </div>
@@ -70,4 +60,6 @@ export default async function BlogPage() {
       </div>
     </div>
   );
-}
+};
+
+export default BlogPage;

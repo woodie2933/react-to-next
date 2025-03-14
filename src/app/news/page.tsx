@@ -1,6 +1,6 @@
 import React from "react";
 
-type NewsItem = {
+type News = {
   id: string;
   title: string;
   content: string;
@@ -8,17 +8,11 @@ type NewsItem = {
   category: string;
   createdAt: number;
 };
-
-async function fetchNews(): Promise<NewsItem[]> {
-  const response = await fetch("http://localhost:4000/news", {
+const NewsPage = async () => {
+  const response = fetch("http://localhost:4000/news", {
     next: { revalidate: 5 },
   });
-
-  return response.json();
-}
-
-export default async function NewsPage() {
-  const news: NewsItem[] = await fetchNews();
+  const news: News[] = await response.json();
 
   return (
     <div className="news-container">
@@ -60,4 +54,6 @@ export default async function NewsPage() {
       </div>
     </div>
   );
-}
+};
+
+export default NewsPage;

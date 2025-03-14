@@ -1,7 +1,7 @@
 import React from "react";
 
-const TodolistPage = () => {
-  return <div>Todolist</div>;
+const TodoPage = () => {
+  return <div>TodoList(CSR)</div>;
 };
 
-export default TodolistPage;
+export default TodoPage;

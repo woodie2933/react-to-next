@@ -1,7 +1,11 @@
-import { useNavigate } from "react-router-dom";
+"use client";
 
-function TodoItem({ todo }) {
-  const navigate = useNavigate();
+import { useRouter } from "next/navigation";
+import { Todo } from "./TodoList";
+import Image from "next/image";
+
+function TodoItem({ todo }: { todo: Todo }) {
+  const router = useRouter();
   return (
     <li
       key={todo.id}
@@ -12,14 +16,14 @@ function TodoItem({ todo }) {
       }}
     >
       <h3>{todo.title}</h3>
-      <img
+      <Image
         src={`${todo.imgPath}?random=${Math.random()}`}
         alt="투두 이미지"
         width={50}
         height={50}
       />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <button onClick={() => navigate(`/todolist/${todo.id}`)}>
+        <button onClick={() => router.push(`/todolist/${todo.id}`)}>
           내용보기
         </button>
       </div>
